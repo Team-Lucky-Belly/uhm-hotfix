@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Loader, Header } from 'semantic-ui-react';
-import { Issue } from '/imports/api/issue/issue';
+import { Container, Loader, Header, Card } from 'semantic-ui-react';
+import { Issue } from '/imports/ui/components/Issue';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 
@@ -42,6 +42,9 @@ class ListIssue extends React.Component {
     return (
         <Container>
           <Header as="h2" textAlign="center">List Issue</Header>
+          <Card.Group>
+            {this.issues.map((issue, index) => <Issue key={index} issue={issue}/>)}
+          </Card.Group>
 
         </Container>
     );
@@ -50,14 +53,14 @@ class ListIssue extends React.Component {
 
 /** Require an array of Stuff documents in the props. */
 ListIssue.propTypes = {
-  issue: PropTypes.array.isRequired,
+  issues: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Get access to Stuff documents.
-  const subscription = Meteor.subscribe('Issue');
+  const subscription = Meteor.subscribe('Issues');
   return {
     issues: Issue.find({}).fetch(),
     ready: subscription.ready(),
