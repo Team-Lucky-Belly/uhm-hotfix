@@ -16,9 +16,9 @@ class Issue extends React.Component {
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
-            <Card.CardDescription>
+            <Card.Description>
               {this.props.issue.status}
-            </Card.CardDescription>
+            </Card.Description>
           </Card.Content>
         </Card>
     );
