@@ -1,18 +1,17 @@
 import React from 'react';
+import { Container } from 'semantic-ui-react';
 
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 class Footer extends React.Component {
   render() {
-    const divStyle = { paddingTop: '15px' };
+    const divStyle = { backgroundColor: 'white', color: 'black' };
     return (
-        <footer>
-          <div style={divStyle} className="ui center aligned container">
-            <hr />
-              Department of Information and Computer Sciences <br />
-              University of Hawaii<br />
-              Honolulu, HI 96822
-          </div>
-        </footer>
+        <div style={{backgroundColor: 'white' }}>
+          <Container align='center' style={divStyle}>
+              Developed by Team Lucky Belly <br />
+              <a href='#'>GitHub</a><br />
+          </Container>
+        </div>
     );
   }
 }
