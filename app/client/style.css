@@ -1,0 +1,43 @@
+#firstimage {
+  background: url("/images/landing.png") no-repeat;
+  background-position: center;
+  background-size: cover;
+  height:650px;
+}
+
+#secondimage {
+  background-color: white;
+  height:550px;
+}
+
+#thirdimage {
+  background-color: white;
+  height:650px;
+}
+
+
+
+#footer {
+  padding-left:50px;
+  padding-right:50px;
+  padding-top:30px;
+}
+
+.topnav {
+  box-shadow: none;
+  border: none;
+  margin: 0;
+  border-radius: 0;
+}
+#topnav {
+  box-shadow: none;
+  border: none;
+  margin: 0;
+  border-radius: 0;
+}
+
+#footer2 {
+  background-color: #006064;
+  color: white;
+}
+
