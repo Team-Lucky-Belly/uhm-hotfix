@@ -48,6 +48,8 @@ class AddIssue extends React.Component {
                 <TextField name='name'/>
                 <TextField name='description' />
                 <SelectField name='status'/>
+                <label>Location</label>
+                <input />
                 <ErrorsField/>
                 <HiddenField name='owner' value='fakeuser@foo.com'/>
               </Segment>
