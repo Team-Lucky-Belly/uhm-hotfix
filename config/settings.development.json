@@ -5,9 +5,8 @@
   ],
 
   "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+    { "name": "Bob", "description": "Bathroom door in POST is broken", "owner": "john@foo.com", "createdAt": "2012-04-23T18:25:43.511Z", "status": "Not Started" },
+    { "name": "Jill", "description": "Dorms are on fire", "owner": "john@foo.com", "createdAt": "2012-04-23T18:25:43.511Z", "status": "Not Started" },
+    { "name": "Max", "description": "We should get free pizza every friday", "owner": "admin@foo.com", "createdAt": "2012-04-23T18:25:43.511Z", "status": "Not Started" }
   ]
 }
