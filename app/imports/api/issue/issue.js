@@ -14,8 +14,8 @@ const IssueSchema = new SimpleSchema({
   status: {
     type: String,
     allowedValues: ['Not Started', 'In Progress', 'Completed'],
-    defaultValue: 'good',
-  },
+    defaultValue: 'Not Started',
+  }
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */

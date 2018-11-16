@@ -4,7 +4,7 @@ import { Issues } from '../../api/issue/issue.js';
 
 
 /* we can use this later to populate issues with dummy data */
-/*
+
 function addIssues(issue) {
   console.log(`  Adding: ${issue.name} (${issue.owner})`);
   Issues.insert(issue);
@@ -17,7 +17,7 @@ if (Issues.find().count() === 0) {
     Meteor.settings.defaultData.map(issue => addIssues(issue));
   }
 }
-*/
+
 
 
 /** This subscription publishes only the documents associated with the logged in user */
