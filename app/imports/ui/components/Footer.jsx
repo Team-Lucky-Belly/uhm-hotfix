@@ -11,7 +11,6 @@ class Footer extends React.Component {
         <div className="black-background colorblocktop" id='footer' style={{ backgroundColor: 'rgb(27, 28, 29)' }}>
 
           <Container align='center' style={divStyle}>
-            <Image centered size='small' src='/images/logo.png'/>
             <Header inverted as='h1'>UHM HOTFIX</Header>
 
             <Menu fluid widths={6} borderless inverted style={footerMenuStyle}>
