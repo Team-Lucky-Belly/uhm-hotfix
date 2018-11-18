@@ -11,10 +11,15 @@ const IssueSchema = new SimpleSchema({
   description: String,
   owner: String,
   createdAt: Date,
+  location: String,
   status: {
     type: String,
     allowedValues: ['Not Started', 'In Progress', 'Completed'],
     defaultValue: 'Not Started',
+  },
+  votes: {
+    type: SimpleSchema.Integer,
+    defaultValue: 0,
   }
 }, { tracker: Tracker });
 
