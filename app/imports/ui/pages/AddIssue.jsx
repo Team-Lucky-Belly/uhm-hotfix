@@ -2,8 +2,8 @@ import React from 'react';
 import { Issues, IssueSchema } from '/imports/api/issue/issue';
 import { Grid, Segment, Header } from 'semantic-ui-react';
 import AutoForm from 'uniforms-semantic/AutoForm';
+import LongTextField from 'uniforms-semantic/LongTextField';
 import TextField from 'uniforms-semantic/TextField';
-import SelectField from 'uniforms-semantic/SelectField';
 import HiddenField from 'uniforms-semantic/HiddenField';
 import SubmitField from 'uniforms-semantic/SubmitField';
 import ErrorsField from 'uniforms-semantic/ErrorsField';
@@ -33,9 +33,12 @@ class AddIssue extends React.Component {
 
   /** On submit, insert the data. */
   submit(data) {
-    const { name, description, location, createdAt, status } = data;
+    const { name, description, location } = data;
     const owner = Meteor.user().username;
-    Issues.insert({ name, description, status, owner, location, createdAt }, this.insertCallback);
+    const createdAt = new Date();
+    const status = 'Not Started';
+    const votes = 0;
+    Issues.insert({ name, description, owner, createdAt, location, status, votes }, this.insertCallback);
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
@@ -50,13 +53,12 @@ class AddIssue extends React.Component {
               }} schema={IssueSchema} onSubmit={this.submit}>
                 <Segment>
                   <TextField name='name'/>
-                  <TextField name='description'/>
-                  <TextField name='createdAt'/>
-                  <SelectField name='status'/>
+                  <LongTextField name='description'/>
                   <TextField name='location'/>
                   <SubmitField value='Submit'/>
                   <ErrorsField/>
                   <HiddenField name='owner' value='fakeuser@foo.com'/>
+                  <HiddenField name='createdAt' value={new Date()}/>
                 </Segment>
               </AutoForm>
             </Grid.Column>
