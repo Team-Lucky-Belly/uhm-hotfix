@@ -1,28 +1,53 @@
 import React from 'react';
-import { Item, Segment, Icon } from 'semantic-ui-react';
+import { Item, Segment, Icon, Grid, Label} from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class Issue extends React.Component {
+
+
   render() {
+
+    let statusStyle;
+
+    if(this.props.issue.status === 'Not Started') {
+      statusStyle = 'red'
+    } else if (this.props.issue.status === 'In Progress') {
+      statusStyle = 'blue'
+    } else if (this.props.issue.status === 'Completed') {
+      statusStyle = 'green'
+    }
+
     return (
 
         <Segment vertical>
           <div style={{paddingBottom: '5px'}}>
-          <Item>
-            <Item.Image float='left'>
-              <Icon name='angle up'/> {this.props.issue.votes}
-            </Item.Image>
+          <Grid>
+            <Grid.Column width={1} textAlign='center'>
+              <Icon name='angle up'/>
+              <p style={{ margin: '0px'}}>{this.props.issue.votes}</p>
+              <Icon name='angle down' />
 
+            </Grid.Column>
+            <Grid.Column width={15}>
+            <Item>
             <Item.Content>
               <Item.Header as='h4'>{this.props.issue.name}</Item.Header>
-              <Item.Meta>Description</Item.Meta>
               <Item.Description>{this.props.issue.description}</Item.Description>
-              <Item.Meta><span className='status'>{this.props.issue.status}</span></Item.Meta>
+              <Item.Meta style={{ marginTop: '5px'}}>
+                <Label as='a' color={statusStyle} style={{float: 'left' }} size='tiny' className='status'>{this.props.issue.status}</Label>
+                <Label as='a'color='white' style={{float: 'left' }} size='tiny' className='status'><Icon name='comments'/>Comments</Label>
+                <Label as='a' color='white' style={{float: 'left' }} size='tiny' className='status'><Icon name='share'/>Share</Label>
+                <Label as='a' color='white' style={{float: 'left' }} size='tiny' className='status'><Icon name='favorite'/>Track</Label>
+                <Label as='a' color='white' style={{float: 'left' }} size='tiny' className='status'><Icon name='flag'/>Report</Label>
+              </Item.Meta>
               <Item.Extra><span  style={{float: 'right', color: 'grey' }} className='createdAt'>{this.props.issue.createdAt.toString()}</span></Item.Extra>
             </Item.Content>
-          </Item>
+
+            </Item>
+            </Grid.Column>
+          </Grid>
           </div>
         </Segment>
 

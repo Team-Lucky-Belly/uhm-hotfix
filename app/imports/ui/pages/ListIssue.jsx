@@ -50,7 +50,6 @@ class ListIssue extends React.Component {
     const issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
     return (
         <Container>
-          <Header textAlign='center' as='h2'>ISSUE FEED</Header>
           {issues.map((issue) => <Issue key={issue._id} issue={issue}/>)}
         </Container>
     );
