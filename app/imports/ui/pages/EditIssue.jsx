@@ -12,9 +12,38 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SelectField from 'uniforms-semantic/SelectField';
+import { Redirect } from 'react-router-dom';
 
 /** Renders the Page for adding a document. */
 class EditIssue extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.remove = this.remove.bind(this);
+    this.deleteCallback = this.deleteCallback.bind(this);
+    this.render = this.render.bind(this);
+  }
+
+  state = {
+    toTable: false,
+  }
+
+  remove() {
+    const r = confirm("Are you sure you want to delete this issue?"); /* eslint-disable-line */
+
+    if (r) Issues.remove(this.props.doc._id, this.deleteCallback);
+
+    this.setState({toTable: true });
+
+  }
+
+  deleteCallback(error) {
+    if (error) {
+      Bert.alert({ type: 'danger', message: `Delete failed: ${error.message}` });
+    } else {
+      Bert.alert({ type: 'success', message: 'Delete succeeded' });
+    }
+  }
 
   /** On submit, insert the data. */
   submit(data) {
@@ -22,13 +51,20 @@ class EditIssue extends React.Component {
     Issues.update(_id,{$set: { name, status, description, location } }, (error) => (error ?
         Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
         Bert.alert({ type: 'success', message: 'Update succeeded' })));
+
   }
+
+
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   renderPage() {
+    if(this.state.toTable === true) {
+      return <Redirect to='/admin'/>
+    }
+
     return (
         <div>
           <Grid container centered>
@@ -36,13 +72,14 @@ class EditIssue extends React.Component {
               <Header as="h2" textAlign="center">Edit Issue</Header>
               <Header as="h3" textAlign="center">submitted by: {this.props.doc.owner} </Header>
               <Header as="h5" textAlign="center">{this.props.doc.createdAt.toLocaleString()}</Header>
-              <AutoForm schema={IssueSchema} onSubmit={this.submit} model={this.props.doc}>
+              <AutoForm ref={(ref) => { this.formRef = ref; }} schema={IssueSchema} onSubmit={this.submit} model={this.props.doc}>
                 <Segment>
                   <TextField name='name'/>
                   <SelectField name='status'/>
                   <LongTextField name='description'/>
                   <TextField name='location'/>
                   <SubmitField value='Submit'/>
+                  <SubmitField value='Delete' onClick={this.remove}/>
                   <ErrorsField/>
                   <HiddenField name='owner' value='fakeuser@foo.com'/>
                 </Segment>
