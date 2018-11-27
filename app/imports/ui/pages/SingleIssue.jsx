@@ -1,18 +1,9 @@
 import React from 'react';
 import { Issues, IssueSchema } from '/imports/api/issue/issue';
-import { Grid, Segment, Header, Loader, Container, Icon, Button, Label, Divider} from 'semantic-ui-react';
-import AutoForm from 'uniforms-semantic/AutoForm';
-import LongTextField from 'uniforms-semantic/LongTextField';
-import TextField from 'uniforms-semantic/TextField';
-import HiddenField from 'uniforms-semantic/HiddenField';
-import SubmitField from 'uniforms-semantic/SubmitField';
-import ErrorsField from 'uniforms-semantic/ErrorsField';
-import { Bert } from 'meteor/themeteorchef:bert';
+import { Grid, Segment, Header, Loader, Container, Icon, Button, Divider} from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import SelectField from 'uniforms-semantic/SelectField';
-import { Redirect } from 'react-router-dom';
 
 class SingleIssue extends React.Component {
   constructor(props) {
