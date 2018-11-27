@@ -5,6 +5,7 @@ import AutoForm from 'uniforms-semantic/AutoForm';
 import TextField from 'uniforms-semantic/TextField';
 import SelectField from 'uniforms-semantic/SelectField';
 import HiddenField from 'uniforms-semantic/HiddenField';
+import SubmitField from 'uniforms-semantic/SubmitField';
 import ErrorsField from 'uniforms-semantic/ErrorsField';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { Meteor } from 'meteor/meteor';
@@ -32,30 +33,36 @@ class AddIssue extends React.Component {
 
   /** On submit, insert the data. */
   submit(data) {
-    const { name, description, createdAt, status } = data;
+    const { name, description, location, createdAt, status } = data;
     const owner = Meteor.user().username;
-    Issues.insert({ name, description, status, owner, createdAt }, this.insertCallback);
+    Issues.insert({ name, description, status, owner, location, createdAt }, this.insertCallback);
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   render() {
     return (
-        <Grid container centered>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">Report an Issue</Header>
-            <AutoForm ref={(ref) => { this.formRef = ref; }} schema={IssueSchema} onSubmit={this.submit}>
-              <Segment>
-                <TextField name='name'/>
-                <TextField name='description' />
-                <SelectField name='status'/>
-                <label>Location</label>
-                <input />
-                <ErrorsField/>
-                <HiddenField name='owner' value='fakeuser@foo.com'/>
-              </Segment>
-            </AutoForm>
-          </Grid.Column>
-        </Grid>
+        <div>
+          <Grid container centered>
+            <Grid.Column>
+              <Header as="h2" textAlign="center">Report an Issue</Header>
+              <AutoForm ref={(ref) => {
+                this.formRef = ref;
+              }} schema={IssueSchema} onSubmit={this.submit}>
+                <Segment>
+                  <TextField name='name'/>
+                  <TextField name='description'/>
+                  <TextField name='createdAt'/>
+                  <SelectField name='status'/>
+                  <TextField name='location'/>
+                  <SubmitField value='Submit'/>
+                  <ErrorsField/>
+                  <HiddenField name='owner' value='fakeuser@foo.com'/>
+                </Segment>
+              </AutoForm>
+            </Grid.Column>
+          </Grid>
+          <div style={{ height: '50px' }}/>
+        </div>
     );
   }
 }
