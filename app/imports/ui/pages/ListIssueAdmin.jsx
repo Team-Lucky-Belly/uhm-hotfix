@@ -42,7 +42,7 @@ class ListIssueAdmin extends React.Component {
     return (
         <Container>
           <Header as="h2" textAlign="center">List Issue</Header>
-          <Table celled selectable sortable>
+          <Table celled selectable sortable >
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell onClick={() => this.handleSort('name')}>Issue</Table.HeaderCell>

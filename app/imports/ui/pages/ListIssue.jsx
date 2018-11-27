@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Loader, Header, Card } from 'semantic-ui-react';
+import { Container, Loader, Header, Feed, Icon } from 'semantic-ui-react';
 import Issue from '/imports/ui/components/Issue';
 import { Issues } from '/imports/api/issue/issue'
 import { withTracker } from 'meteor/react-meteor-data';
@@ -43,10 +43,39 @@ class ListIssue extends React.Component {
     return (
         <Container>
           <Header as="h2" textAlign="center">List Issue</Header>
-          <Card.Group>
-            {this.issues.map((issue, index) => <Issue key={index} issue={issue}/>)}
-          </Card.Group>
 
+          <Feed>
+            <Feed.Event>
+              <Feed.Content>
+                <Feed.Summary>
+                  <Feed.User>Elliot Fu</Feed.User> added you as a friend
+                  <Feed.Date>1 Hour Ago</Feed.Date>
+                </Feed.Summary>
+                <Feed.Meta>
+                  <Feed.Like>
+                    <Icon name='like' />
+                    4 Likes
+                  </Feed.Like>
+                </Feed.Meta>
+              </Feed.Content>
+            </Feed.Event>
+
+            <Feed.Event>
+              <Feed.Label image='/images/avatar/small/helen.jpg' />
+              <Feed.Content>
+                <Feed.Summary>
+                  <a>Helen Troy</a> added <a>2 new illustrations</a>
+                  <Feed.Date>4 days ago</Feed.Date>
+                </Feed.Summary>
+                <Feed.Meta>
+                  <Feed.Like>
+                    <Icon name='like' />
+                    1 Like
+                  </Feed.Like>
+                </Feed.Meta>
+              </Feed.Content>
+            </Feed.Event>
+          </Feed>
         </Container>
     );
   }

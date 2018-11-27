@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 /** Renders the Page for editing a single document. */
 class EditStuff extends React.Component {
 
-  /** On successful submit, insert the data. */
+  /** On successful submit, insert the  data. */
   submit(data) {
     const { name, quantity, condition, _id } = data;
     Stuffs.update(_id, { $set: { name, quantity, condition } }, (error) => (error ?
@@ -40,6 +40,7 @@ class EditStuff extends React.Component {
                 <TextField name='name'/>
                 <NumField name='quantity' decimal={false}/>
                 <SelectField name='condition'/>
+
                 <SubmitField value='Submit'/>
                 <ErrorsField/>
                 <HiddenField name='owner' />
