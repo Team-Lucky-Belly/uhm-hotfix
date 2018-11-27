@@ -5,6 +5,22 @@ import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class Issue extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+
+    this.onUpVote = this.onUpVote.bind(this);
+    this.onDownVote = this.onDownVote.bind(this);
+  }
+
+  onUpVote() {
+    this.props.issue.votes++;
+  }
+
+  onDownVote() {
+    this.props.issue.votes--;
+  }
+
 
 
   render() {
@@ -25,9 +41,9 @@ class Issue extends React.Component {
           <div style={{paddingBottom: '5px'}}>
           <Grid>
             <Grid.Column width={1} textAlign='center'>
-              <Icon name='angle up'/>
+              <Icon name='angle up' onClick={this.onUpVote}/>
               <p style={{ margin: '0px'}}>{this.props.issue.votes}</p>
-              <Icon name='angle down' />
+              <Icon name='angle down' onClick={this.onDownVote} />
 
             </Grid.Column>
             <Grid.Column width={15}>
@@ -42,7 +58,7 @@ class Issue extends React.Component {
                 <Label as='a' color='white' style={{float: 'left' }} size='tiny' className='status'><Icon name='favorite'/>Track</Label>
                 <Label as='a' color='white' style={{float: 'left' }} size='tiny' className='status'><Icon name='flag'/>Report</Label>
               </Item.Meta>
-              <Item.Extra><span  style={{float: 'right', color: 'grey' }} className='createdAt'>{this.props.issue.createdAt.toString()}</span></Item.Extra>
+              <Item.Extra><span  style={{float: 'right', color: 'grey' }} className='createdAt'>{this.props.issue.createdAt.toLocaleString()}</span></Item.Extra>
             </Item.Content>
 
             </Item>
