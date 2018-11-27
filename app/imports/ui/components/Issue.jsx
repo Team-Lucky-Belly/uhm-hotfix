@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'semantic-ui-react';
+import { Item, Segment, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -7,20 +7,25 @@ import { withRouter } from 'react-router-dom';
 class Issue extends React.Component {
   render() {
     return (
-        <Card>
-          <Card.Content>
-            <Card.Header>{this.props.issue.name}</Card.Header>
-            <Card.Meta>{this.props.issue.createdAt}</Card.Meta>
-            <Card.Description>
-              {this.props.issue.description}
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <Card.Description>
-              {this.props.issue.status}
-            </Card.Description>
-          </Card.Content>
-        </Card>
+
+        <Segment vertical>
+          <div style={{paddingBottom: '5px'}}>
+          <Item>
+            <Item.Image float='left'>
+              <Icon name='angle up'/> {this.props.issue.votes}
+            </Item.Image>
+
+            <Item.Content>
+              <Item.Header as='h4'>{this.props.issue.name}</Item.Header>
+              <Item.Meta>Description</Item.Meta>
+              <Item.Description>{this.props.issue.description}</Item.Description>
+              <Item.Meta><span className='status'>{this.props.issue.status}</span></Item.Meta>
+              <Item.Extra><span  style={{float: 'right', color: 'grey' }} className='createdAt'>{this.props.issue.createdAt.toString()}</span></Item.Extra>
+            </Item.Content>
+          </Item>
+          </div>
+        </Segment>
+
     );
   }
 }
