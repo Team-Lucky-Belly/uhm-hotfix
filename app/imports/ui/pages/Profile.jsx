@@ -12,14 +12,14 @@ class Profile extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   constructor(props) {
     super(props);
-    this.state = { issues: this.props.issues, currentColumn: "" };
+    this.state = { issues: this.props.issues, currentColumn: '' };
     this.handleSort = this.handleSort.bind(this);
   }
 
   handleSort = sortKey => {
     const issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
     const newIssues = sortBy(issues, sortKey);
-    let newColumn = "";
+    let newColumn = '';
 
     if (this.state.currentColumn === sortKey) {
       newIssues.reverse();
@@ -41,6 +41,36 @@ class Profile extends React.Component {
     console.log(issues);
     return (
         <Container>
+        <Table basic='very' celled collapsing selectable sortable >
+            <Table.Header>
+      <Table.Row>
+        <Table.HeaderCell>Issue</Table.HeaderCell>
+        <Table.HeaderCell>Status</Table.HeaderCell>
+      </Table.Row>
+    </Table.Header>
+
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell>
+          <Header as='h4' image>
+            <Header.Content onClick={() => this.handleSort('name')}>
+                {issues.map((issue) => <IssueRow key={issue._id} issue={issue}/>)}
+              <Header.Subheader>Human Resources</Header.Subheader>
+            </Header.Content>
+          </Header>
+        </Table.Cell>
+        <Table.Cell>22</Table.Cell>
+      </Table.Row>
+            </Table.Body>
+        </Table>
+        </Container>
+        
+        
+        
+        
+        
+       /* 
+        <Container>
           <Header as="h2" textAlign="center">List Issue</Header>
           <Table celled selectable sortable >
           <Table.Header>
@@ -58,6 +88,7 @@ class Profile extends React.Component {
           </Table.Body>
         </Table>
         </Container>
+        */
     );
   }
 }
