@@ -1,5 +1,7 @@
 import React from 'react';
-import { Item, Segment, Icon, Grid, Label} from 'semantic-ui-react';
+import { Item, Segment, Icon, Grid, Label, Button} from 'semantic-ui-react';
+import { Issues, IssueSchema } from '/imports/api/issue/issue';
+
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -7,25 +9,38 @@ import { withRouter } from 'react-router-dom';
 class Issue extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      upvotePressed: false,
+      downvotePressed: false,
+    };
 
     this.onUpVote = this.onUpVote.bind(this);
     this.onDownVote = this.onDownVote.bind(this);
   }
 
   onUpVote() {
-    this.props.issue.votes++;
+    let votes;
+    !this.state.upvotePressed ? votes = this.props.issue.votes + 1 : votes = this.props.issue.votes - 1;
+    Issues.update(this.props.issue._id, { $set: { votes } });
+    this.setState((state) => {
+      return { upvotePressed: !state.upvotePressed,  }
+    });
   }
 
   onDownVote() {
-    this.props.issue.votes--;
+    let votes;
+    this.state.downvotePressed ? votes = this.props.issue.votes + 1 : votes = this.props.issue.votes - 1;
+    Issues.update(this.props.issue._id, {$set: {votes } });
+    this.setState((state) => {
+      return { downvotePressed: !state.downvotePressed }
+    });
   }
-
-
 
   render() {
 
     let statusStyle;
+    let upvoteColor;
+    let downvoteColor;
 
     if(this.props.issue.status === 'Not Started') {
       statusStyle = 'red'
@@ -35,15 +50,27 @@ class Issue extends React.Component {
       statusStyle = 'green'
     }
 
+    if(this.state.upvotePressed) {
+     upvoteColor = 'orange';
+    } else {
+      upvoteColor = 'black';
+    }
+
+    if(this.state.downvotePressed) {
+      downvoteColor = 'blue';
+    } else {
+      downvoteColor = 'black';
+    }
+
     return (
 
         <Segment vertical>
           <div style={{paddingBottom: '5px'}}>
           <Grid>
             <Grid.Column width={1} textAlign='center'>
-              <Icon name='angle up' onClick={this.onUpVote}/>
+              <Button icon className='upvoteBtn' onClick={this.onUpVote}><Icon size='large' color={upvoteColor} name='angle up'/></Button>
               <p style={{ margin: '0px'}}>{this.props.issue.votes}</p>
-              <Icon name='angle down' onClick={this.onDownVote} />
+              <Button icon className='downvoteBtn' onClick={this.onDownVote}><Icon size='large' color={downvoteColor} name='angle down' /></Button>
 
             </Grid.Column>
             <Grid.Column width={15}>
@@ -53,10 +80,10 @@ class Issue extends React.Component {
               <Item.Description>{this.props.issue.description}</Item.Description>
               <Item.Meta style={{ marginTop: '5px'}}>
                 <Label as='a' color={statusStyle} style={{float: 'left' }} size='tiny' className='status'>{this.props.issue.status}</Label>
-                <Label as='a'color='white' style={{float: 'left' }} size='tiny' className='status'><Icon name='comments'/>Comments</Label>
-                <Label as='a' color='white' style={{float: 'left' }} size='tiny' className='status'><Icon name='share'/>Share</Label>
-                <Label as='a' color='white' style={{float: 'left' }} size='tiny' className='status'><Icon name='favorite'/>Track</Label>
-                <Label as='a' color='white' style={{float: 'left' }} size='tiny' className='status'><Icon name='flag'/>Report</Label>
+                <Label as='a' style={{float: 'left' }} size='tiny' className='status'><Icon name='comments'/>Comments</Label>
+                <Label as='a' style={{float: 'left' }} size='tiny' className='status'><Icon name='share'/>Share</Label>
+                <Label as='a' style={{float: 'left' }} size='tiny' className='status'><Icon name='favorite'/>Track</Label>
+                <Label as='a' style={{float: 'left' }} size='tiny' className='status'><Icon name='flag'/>Report</Label>
               </Item.Meta>
               <Item.Extra><span  style={{float: 'right', color: 'grey' }} className='createdAt'>{this.props.issue.createdAt.toLocaleString()}</span></Item.Extra>
             </Item.Content>
