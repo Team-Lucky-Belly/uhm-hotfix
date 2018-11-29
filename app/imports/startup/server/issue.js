@@ -24,7 +24,7 @@ if (Issues.find().count() === 0) {
 Meteor.publish('Issues', function publish() {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return Issues.find({ owner: username });
+    return Issues.find({});
   }
   return this.ready();
 });
@@ -36,3 +36,5 @@ Meteor.publish('IssuesAdmin', function publish() {
   }
   return this.ready();
 });
+
+
