@@ -43,34 +43,23 @@ state = { activeItem: 'active' }
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
-      const { activeItem } = this.state;
-
     const issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
     console.log(issues);
     return (
         <div>
-            
-            <Menu attched='top' tabular>
-                <Menu.Item name='active' active={ activeItem ==='active'} onClick={this.handleItemClick}>
-                    Profile
-                    <Segment attached='bottom'>
             <Card centered color='red'>
     <Card.Content>
       <Card.Header>{Meteor.user().username}</Card.Header>
       <Card.Meta>
           {Meteor.user().password}
       </Card.Meta>
-      <Card.Description>I'm an ICS major.</Card.Description>
+      <Card.Description> I'm an ICS major. </Card.Description>
     </Card.Content>
     <Card.Content extra>
+        # of submitted issues: {issues.length}
     </Card.Content>
   </Card>
-            </Segment>
-                </Menu.Item>
-                
-                <Menu.Item name='2' active={activeItem === 'active'} onClick={this.handleItemClick}>
-                    Your submitted Issues
-                    <Table celled selectable sortable >
+<Table celled selectable sortable >
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell onClick={() => this.handleSort('name')}>Issue</Table.HeaderCell>
@@ -84,11 +73,7 @@ state = { activeItem: 'active' }
             {issues.map((issue) => <UserRow key={issue._id} issue={issue}/>)}
           </Table.Body>
         </Table>
-                </Menu.Item>
-            </Menu>
-            
           <Header as="h2" textAlign="center">Your submitted Issues</Header>
-          
         </div>
 
     );

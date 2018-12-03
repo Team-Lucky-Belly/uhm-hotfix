@@ -13,7 +13,7 @@ class ListIssue extends React.Component {
     this.state = { issues: this.props.issues, currentColumn: '' };
   }
 
-
+/*
   issues = [
     {
       name: 'Bob',
@@ -37,6 +37,7 @@ class ListIssue extends React.Component {
       status: 'Completed',
     },
   ];
+  */
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
