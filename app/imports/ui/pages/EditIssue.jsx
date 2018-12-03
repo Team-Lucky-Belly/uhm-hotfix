@@ -33,7 +33,7 @@ class EditIssue extends React.Component {
 
     if (r) Issues.remove(this.props.doc._id, this.deleteCallback);
 
-    this.setState({toTable: true });
+    this.setState({ toTable: true });
 
   }
 
@@ -48,7 +48,7 @@ class EditIssue extends React.Component {
   /** On submit, insert the data. */
   submit(data) {
     const { name, status, description, location, _id } = data;
-    Issues.update(_id,{$set: { name, status, description, location } }, (error) => (error ?
+    Issues.update(_id,{$set: { name, status, description, location } } , (error) => (error ?
         Bert.alert({ type: 'danger', message: `Update failed: ${error.message}` }) :
         Bert.alert({ type: 'success', message: 'Update succeeded' })));
 
@@ -61,8 +61,8 @@ class EditIssue extends React.Component {
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   renderPage() {
-    if(this.state.toTable === true) {
-      return <Redirect to='/admin'/>
+    if (this.state.toTable === true) {
+      return <Redirect to='/admin'/>;
     }
 
     return (
@@ -72,7 +72,8 @@ class EditIssue extends React.Component {
               <Header as="h2" textAlign="center">Edit Issue</Header>
               <Header as="h3" textAlign="center">submitted by: {this.props.doc.owner} </Header>
               <Header as="h5" textAlign="center">{this.props.doc.createdAt.toLocaleString()}</Header>
-              <AutoForm ref={(ref) => { this.formRef = ref; }} schema={IssueSchema} onSubmit={this.submit} model={this.props.doc}>
+              <AutoForm ref={(ref) => { this.formRef = ref; }} schema={IssueSchema}
+              onSubmit={this.submit} model={this.props.doc}>
                 <Segment>
                   <TextField name='name'/>
                   <SelectField name='status'/>

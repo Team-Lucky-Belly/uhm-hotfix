@@ -1,8 +1,8 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Loader, Header } from 'semantic-ui-react';
+import { Container, Loader } from 'semantic-ui-react';
 import Issue from '/imports/ui/components/Issue';
-import { Issues } from '/imports/api/issue/issue'
+import { Issues } from '/imports/api/issue/issue';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 
@@ -10,9 +10,8 @@ import PropTypes from 'prop-types';
 class ListIssue extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {issues : this.props.issues, currentColumn : "" };
+    this.state = { issues: this.props.issues, currentColumn: '' };
   }
-
 
 
   issues = [

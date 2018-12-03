@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Table, Container, Loader, Header, Card, Icon } from 'semantic-ui-react';
+import { Table, Container, Loader, Header, Card, Segment, Menu } from 'semantic-ui-react';
 import IssueRow from '/imports/ui/components/IssueRow';
 import UserRow from '/imports/ui/components/UserRow';
 
@@ -32,32 +32,45 @@ class Profile extends React.Component {
     this.setState({ issues: newIssues, currentColumn: newColumn });
   };
 
+state = { activeItem: 'active' }
+
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
+      const { activeItem } = this.state;
 
     const issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
     console.log(issues);
     return (
-        <Container>
-            <Card centered>
+        <div>
+            
+            <Menu attched='top' tabular>
+                <Menu.Item name='active' active={ activeItem ==='active'} onClick={this.handleItemClick}>
+                    Profile
+                    <Segment attached='bottom'>
+            <Card centered color='red'>
     <Card.Content>
       <Card.Header>{Meteor.user().username}</Card.Header>
       <Card.Meta>
           {Meteor.user().password}
       </Card.Meta>
-      <Card.Description>Matthew is a musician living in Nashville.</Card.Description>
+      <Card.Description>I'm an ICS major.</Card.Description>
     </Card.Content>
     <Card.Content extra>
-      <a> # of submitted issues: {this.state.issues.length+1}
-      </a>
     </Card.Content>
   </Card>
-          <Header as="h2" textAlign="center">Your submitted Issues</Header>
-          <Table celled selectable sortable inverted >
+            </Segment>
+                </Menu.Item>
+                
+                <Menu.Item name='2' active={activeItem === 'active'} onClick={this.handleItemClick}>
+                    Your submitted Issues
+                    <Table celled selectable sortable >
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell onClick={() => this.handleSort('name')}>Issue</Table.HeaderCell>
@@ -71,7 +84,12 @@ class Profile extends React.Component {
             {issues.map((issue) => <UserRow key={issue._id} issue={issue}/>)}
           </Table.Body>
         </Table>
-        </Container>
+                </Menu.Item>
+            </Menu>
+            
+          <Header as="h2" textAlign="center">Your submitted Issues</Header>
+          
+        </div>
 
     );
   }
