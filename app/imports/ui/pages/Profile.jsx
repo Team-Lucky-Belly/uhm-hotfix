@@ -1,7 +1,9 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Table, Container, Loader, Header } from 'semantic-ui-react';
+import { Table, Container, Loader, Header, Card, Icon } from 'semantic-ui-react';
 import IssueRow from '/imports/ui/components/IssueRow';
+import UserRow from '/imports/ui/components/UserRow';
+
 import { Issues } from '/imports/api/issue/issue';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -41,54 +43,36 @@ class Profile extends React.Component {
     console.log(issues);
     return (
         <Container>
-        <Table basic='very' celled collapsing selectable sortable >
-            <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>Issue</Table.HeaderCell>
-        <Table.HeaderCell>Status</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
-
-    <Table.Body>
-      <Table.Row>
-        <Table.Cell>
-          <Header as='h4' image>
-            <Header.Content onClick={() => this.handleSort('name')}>
-                {issues.map((issue) => <IssueRow key={issue._id} issue={issue}/>)}
-              <Header.Subheader>Human Resources</Header.Subheader>
-            </Header.Content>
-          </Header>
-        </Table.Cell>
-        <Table.Cell>22</Table.Cell>
-      </Table.Row>
-            </Table.Body>
-        </Table>
-        </Container>
-        
-        
-        
-        
-        
-       /* 
-        <Container>
-          <Header as="h2" textAlign="center">List Issue</Header>
-          <Table celled selectable sortable >
+            <Card centered>
+    <Card.Content>
+      <Card.Header>{Meteor.user().username}</Card.Header>
+      <Card.Meta>
+          {Meteor.user().password}
+      </Card.Meta>
+      <Card.Description>Matthew is a musician living in Nashville.</Card.Description>
+    </Card.Content>
+    <Card.Content extra>
+      <a> # of submitted issues: {this.state.issues.length+1}
+      </a>
+    </Card.Content>
+  </Card>
+          <Header as="h2" textAlign="center">Your submitted Issues</Header>
+          <Table celled selectable sortable inverted >
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell onClick={() => this.handleSort('name')}>Issue</Table.HeaderCell>
               <Table.HeaderCell onClick={() => this.handleSort('createdAt')}>Created At</Table.HeaderCell>
-              <Table.HeaderCell onClick={() => this.handleSort('owner')}>Created By</Table.HeaderCell>
               <Table.HeaderCell onClick={() => this.handleSort('location')}>Location</Table.HeaderCell>
               <Table.HeaderCell onClick={() => this.handleSort('status')}>Status</Table.HeaderCell>
               <Table.HeaderCell onClick={() => this.handleSort('votes')}>Votes</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {issues.map((issue) => <IssueRow key={issue._id} issue={issue}/>)}
+            {issues.map((issue) => <UserRow key={issue._id} issue={issue}/>)}
           </Table.Body>
         </Table>
         </Container>
-        */
+
     );
   }
 }
