@@ -41,3 +41,10 @@
   color: white;
 }
 
+.upvoteBtn {
+  background: #fff !important;
+}
+
+.downvoteBtn {
+  background: #fff !important;
+}
