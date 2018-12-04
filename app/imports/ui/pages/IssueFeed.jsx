@@ -5,21 +5,35 @@ import IssueFeedEvent from '/imports/ui/components/IssueFeedEvent';
 import { Issues } from '/imports/api/issue/issue'
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { sortBy } from 'underscore';
+import { sortBy, filter } from 'underscore';
 
 /** Renders a table contaiimport React from 'react';
  ning all of the Stuff documents. Use <StuffItem> to render each row. */
 class IssueFeed extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {issues : this.props.issues, currentColumn : "", sortBy : "Time Submitted", statusFilter : "All"};
+    this.state = {issues : this.props.issues, currentColumn : "", sortKey : 'createdAt', statusFilter : "All"};
     this.handleSort = this.handleSort.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
   }
 
-  handleSort = () => {};
+  handleSort = (sortKey) => {
+    var issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
 
-  handleFilter = () => {};
+    issues = sortBy(issues, sortKey).reverse();
+    this.setState({sortKey : sortKey, issues : issues});
+
+  };
+
+  handleFilter = (filterKey) => {
+    let issues = Issues.find({}).fetch();
+    if (filterKey !== 'all') {
+      issues = filter(issues, (issue) => issue.status === filterKey);
+    }
+    console.log(issues);
+    this.handleSort(this.state.sortKey);
+    this.setState({ issues: issues, statusFilter: filterKey });
+  };
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
@@ -29,25 +43,25 @@ class IssueFeed extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
 
-    const sortKey = this.state.sortBy ? this.state.sortBy : "createdAt";
-    var issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
-    issues = sortBy(issues, sortKey);
-
-
+    let issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
+    if (this.state.sortKey === 'createdAt') issues = sortBy(issues, 'createdAt').reverse();
+    let filterKeys = ['All', 'Not Started', 'In Progress', 'Completed'];
+    filterKeys = filter(filterKeys, key  => key !== this.state.statusFilter);
+    console.log(filterKeys);
     return (
         <Container>
           <Menu>
             <Menu.Item header>Sort By:</Menu.Item>
-            <Menu.Item name='Time Submitted' active={sortBy == 'Time Submitted'}> Time Submitted </Menu.Item>
-            <Menu.Item name='Likes' active={sortBy == 'Likes'}> Likes </Menu.Item>
-
+            <Menu.Item name='createdAt' active={sortBy === 'createdAt'} onClick={() => this.handleSort('createdAt')}>
+              Time Submitted
+            </Menu.Item>
+            <Menu.Item name='votes' active={sortBy === 'votes'} onClick={() => this.handleSort('votes')}>
+              Votes
+            </Menu.Item>
             <Menu.Item header position='right'>Filter By Status:</Menu.Item>
-            <Dropdown item text='All'>
+            <Dropdown item text={this.state.statusFilter}>
               <Dropdown.Menu>
-                <Dropdown.Item>Not Started</Dropdown.Item>
-                <Dropdown.Item>In Progress</Dropdown.Item>
-                <Dropdown.Item>Completed</Dropdown.Item>
-
+                {filterKeys.map((key) => <Dropdown.Item key={key} onClick={() => this.handleFilter(key)}>{key}</Dropdown.Item>)}
               </Dropdown.Menu>
             </Dropdown>
           </Menu>
