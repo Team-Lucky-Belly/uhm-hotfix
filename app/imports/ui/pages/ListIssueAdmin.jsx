@@ -5,7 +5,7 @@ import IssueRow from '/imports/ui/components/IssueRow';
 import { Issues } from '/imports/api/issue/issue'
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { sortBy } from 'underscore'
+import { sortBy } from 'underscore';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ListIssueAdmin extends React.Component {

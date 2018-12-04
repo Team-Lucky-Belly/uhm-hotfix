@@ -5,7 +5,6 @@ import IssueFeedEvent from '/imports/ui/components/IssueFeedEvent';
 import { Issues } from '/imports/api/issue/issue'
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { sortBy } from 'underscore';
 
 /** Renders a table contaiimport React from 'react';
 ning all of the Stuff documents. Use <StuffItem> to render each row. */
@@ -20,6 +19,14 @@ class IssueFeed extends React.Component {
   handleSort = () => {};
 
   handleFilter = () => {};
+
+/** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+class IssueFeed extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {issues : this.props.issues, currentColumn : "" };
+  }
+
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
@@ -51,6 +58,9 @@ class IssueFeed extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
         </Menu>
+    const issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
+    return (
+        <Container>
           {issues.map((issue) => <IssueFeedEvent key={issue._id} issue={issue}/>)}
         </Container>
     );

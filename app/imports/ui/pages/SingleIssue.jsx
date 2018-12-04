@@ -1,9 +1,15 @@
 import React from 'react';
 import { Issues, IssueSchema } from '/imports/api/issue/issue';
-import { Grid, Segment, Header, Loader, Container, Icon, Button, Divider} from 'semantic-ui-react';
+import { Comments, CommentSchema} from '../../api/comment/comment';
+import { Grid, Segment, Header, Loader, Container, Form, Feed, TextArea, Button} from 'semantic-ui-react';
+import SingleIssueContent from '/imports/ui/components/SingleIssueContent';
+import CommentForm from '/imports/ui/components/CommentForm';
+import Comment from '/imports/ui/components/Comment';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { sortBy } from 'underscore';
+
 
 class SingleIssue extends React.Component {
   constructor(props) {
@@ -19,26 +25,15 @@ class SingleIssue extends React.Component {
           <Container>
             <br/>
           <Grid container centered>
-            <Grid.Column width={1}>
-                <Button icon basic>
-                  <Icon name='up arrow' />
-                  {this.props.doc.votes}
-                </Button>
+            <div className="two column centered row">
+            <Grid.Column>
+              <Feed size='large'>
+                <SingleIssueContent issue={this.props.issue}/>
+              </Feed>
+              <CommentForm issueId={this.props.issue._id} owner = {this.props.issue.owner}/>
+              {this.props.comments.map((comment) => <Comment key={comment._id} comment={comment}/>)}
             </Grid.Column>
-            <Grid.Column width={15}>
-              <Segment>
-              <Header as="h2">{this.props.doc.name}
-                      <Header.Subheader>Submitted by: {this.props.doc.owner}
-                      </Header.Subheader>
-                <Header.Subheader>Located at: {this.props.doc.location}
-                </Header.Subheader>
-                <Header.Subheader>{this.props.doc.createdAt.toLocaleString()}
-                      </Header.Subheader>
-                      </Header>
-                <Divider/>
-              {this.props.doc.description}
-                </Segment>
-            </Grid.Column>
+            </div>
           </Grid>
           <div style={{ height: '50px' }}/>
           </Container>
@@ -48,7 +43,8 @@ class SingleIssue extends React.Component {
 
 /** Require the presence of a Stuff document in the props object. Uniforms adds 'model' to the props, which we use. */
 SingleIssue.propTypes = {
-  doc: PropTypes.object,
+  issue: PropTypes.object,
+  comments: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -57,9 +53,12 @@ export default withTracker(({ match }) => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const documentId = match.params._id;
   // Get access to Stuff documents.
-  const subscription = Meteor.subscribe('IssuesAdmin');
+  const issuesSub = Meteor.subscribe('Issues');
+  const commentsSub = Meteor.subscribe('Comments');
+  const comments = sortBy(Comments.find({issueId : documentId}).fetch(), 'createdAt').reverse();
   return {
-    doc: Issues.findOne(documentId),
-    ready: subscription.ready(),
+    issue: Issues.findOne(documentId),
+    comments : comments,
+    ready: (issuesSub.ready() && commentsSub.ready()),
   };
 })(SingleIssue);
