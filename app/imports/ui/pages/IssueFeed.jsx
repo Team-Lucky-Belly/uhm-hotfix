@@ -8,12 +8,12 @@ import PropTypes from 'prop-types';
 import { sortBy } from 'underscore';
 
 /** Renders a table contaiimport React from 'react';
-ning all of the Stuff documents. Use <StuffItem> to render each row. */
+ ning all of the Stuff documents. Use <StuffItem> to render each row. */
 class IssueFeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {issues : this.props.issues, currentColumn : "", sortBy : "Time Submitted", statusFilter : "All"};
-    this.handleSort = this.handleSort.bcomind(this);
+    this.handleSort = this.handleSort.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
   }
 
@@ -29,28 +29,28 @@ class IssueFeed extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
 
-    const sortBy = this.state.sortBy ? this.state.sortBy : "createdAt";
+    const sortKey = this.state.sortBy ? this.state.sortBy : "createdAt";
     var issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
-    issues = sortBy(issues, sortBy);
+    issues = sortBy(issues, sortKey);
 
 
     return (
         <Container>
-        <Menu>
-          <Menu.Item header>Sort By:</Menu.Item>
-          <Menu.Item name='Time Submitted' active={sortBy == 'Time Submitted'}> Time Submitted </Menu.Item>
-          <Menu.Item name='Likes' active={sortBy == 'Likes'}> Likes </Menu.Item>
+          <Menu>
+            <Menu.Item header>Sort By:</Menu.Item>
+            <Menu.Item name='Time Submitted' active={sortBy == 'Time Submitted'}> Time Submitted </Menu.Item>
+            <Menu.Item name='Likes' active={sortBy == 'Likes'}> Likes </Menu.Item>
 
-          <Menu.Item header position='right'>Filter By Status:</Menu.Item>
-          <Dropdown item text='All'>
-            <Dropdown.Menu>
-              <Dropdown.Item>Not Started</Dropdown.Item>
-              <Dropdown.Item>In Progress</Dropdown.Item>
-              <Dropdown.Item>Completed</Dropdown.Item>
+            <Menu.Item header position='right'>Filter By Status:</Menu.Item>
+            <Dropdown item text='All'>
+              <Dropdown.Menu>
+                <Dropdown.Item>Not Started</Dropdown.Item>
+                <Dropdown.Item>In Progress</Dropdown.Item>
+                <Dropdown.Item>Completed</Dropdown.Item>
 
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu>
           {issues.map((issue) => <IssueFeedEvent key={issue._id} issue={issue}/>)}
         </Container>
     );
