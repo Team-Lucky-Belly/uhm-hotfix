@@ -1,0 +1,18 @@
+{
+  "defaultAccounts": [
+    { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
+    { "email": "john@foo.com", "password": "changeme" }
+  ],
+
+  "defaultData": [
+    { "name": "Bathroom door at POST is broken", "description": "The bathroom door at POST wont stay closed. I found out the hard way.", "owner": "john@foo.com", "createdAt": "2012-04-23T18:25:43.511Z", "location": "Post", "status": "In Progress", "votes": 3 },
+    { "name": "Dorms are on fire", "description": "Someone should check on the dorms. There is for sure a fire going on just sayin.", "owner": "john@foo.com", "createdAt": "2012-04-23T18:25:43.511Z", "location": "Dorms", "status": "Not Started", "votes": 0 },
+    { "name": "Free pizza fridays.", "description": "We should get pizza every friday. My dads paying alot to go here and it isn't right that we dont get free pizza ):", "owner": "admin@foo.com", "createdAt": "2012-04-23T18:25:43.511Z", "location": "The Field", "status": "Not Started", "votes": 2  }
+  ],
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL": "mongodb://wpost1292:Ge0rge0!@ds037407.mlab.com:37407/uhm-hotfix-db"
+    }
+  }
+}
+
