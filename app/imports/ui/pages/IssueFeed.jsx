@@ -1,13 +1,13 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Container, Loader, Header } from 'semantic-ui-react';
-import Issue from '/imports/ui/components/Issue';
+import IssueFeedEvent from '/imports/ui/components/IssueFeedEvent';
 import { Issues } from '/imports/api/issue/issue'
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-class ListIssue extends React.Component {
+class IssueFeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {issues : this.props.issues, currentColumn : "" };
@@ -50,14 +50,14 @@ class ListIssue extends React.Component {
     const issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
     return (
         <Container>
-          {issues.map((issue) => <Issue key={issue._id} issue={issue}/>)}
+          {issues.map((issue) => <IssueFeedEvent key={issue._id} issue={issue}/>)}
         </Container>
     );
   }
 }
 
 /** Require an array of Stuff documents in the props. */
-ListIssue.propTypes = {
+IssueFeed.propTypes = {
   issues: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
@@ -70,4 +70,4 @@ export default withTracker(() => {
     issues: Issues.find({}).fetch(),
     ready: subscription.ready(),
   };
-})(ListIssue);
+})(IssueFeed);

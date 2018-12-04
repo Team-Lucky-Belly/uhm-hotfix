@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-class Issue extends React.Component {
+class IssueFeedEvent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,8 +16,13 @@ class Issue extends React.Component {
 
     this.onUpVote = this.onUpVote.bind(this);
     this.onDownVote = this.onDownVote.bind(this);
+    this.redirectToSingleIssue = this.redirectToSingleIssue.bind(this);
   }
 
+  redirectToSingleIssue() {
+    let path = `issue/${this.props.issue._id}`;
+    this.props.history.push(path);
+  }
   onUpVote() {
     let votes;
     !this.state.upvotePressed ? votes = this.props.issue.votes + 1 : votes = this.props.issue.votes - 1;
@@ -74,9 +79,11 @@ class Issue extends React.Component {
 
             </Grid.Column>
             <Grid.Column width={15}>
-            <Item>
+              <Button fluid basic>
+            <Item onClick={this.redirectToSingleIssue}>
             <Item.Content>
-              <Item.Header as='h4'>{this.props.issue.name}</Item.Header>
+              <Item.Header as='h4' >{this.props.issue.name}</Item.Header>
+
               <Item.Description>{this.props.issue.description}</Item.Description>
               <Item.Meta style={{ marginTop: '5px'}}>
                 <Label as='a' color={statusStyle} style={{float: 'left' }} size='tiny' className='status'>{this.props.issue.status}</Label>
@@ -89,6 +96,7 @@ class Issue extends React.Component {
             </Item.Content>
 
             </Item>
+              </Button>
             </Grid.Column>
           </Grid>
           </div>
@@ -99,9 +107,9 @@ class Issue extends React.Component {
 }
 
 /** Require a document to be passed to this component. */
-Issue.propTypes = {
+IssueFeedEvent.propTypes = {
   issue: PropTypes.object.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */
-export default withRouter(Issue);
+export default withRouter(IssueFeedEvent);

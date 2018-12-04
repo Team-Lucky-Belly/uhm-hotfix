@@ -1,2 +1,3 @@
 import './accounts.js';
-import './issue.js'
+import './comment.js';
+import './issue.js';
