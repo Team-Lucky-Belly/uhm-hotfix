@@ -23,7 +23,6 @@ if (Issues.find().count() === 0) {
 /** This subscription publishes only the documents associated with the logged in user */
 Meteor.publish('Issues', function publish() {
   if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
     return Issues.find({});
   }
   return this.ready();
