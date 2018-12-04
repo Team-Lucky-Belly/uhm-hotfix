@@ -1,43 +1,25 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Loader, Header } from 'semantic-ui-react';
+import { Container, Loader, Menu, Dropdown} from 'semantic-ui-react';
 import IssueFeedEvent from '/imports/ui/components/IssueFeedEvent';
 import { Issues } from '/imports/api/issue/issue'
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { sortBy } from 'underscore';
 
-/** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+/** Renders a table contaiimport React from 'react';
+ning all of the Stuff documents. Use <StuffItem> to render each row. */
 class IssueFeed extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {issues : this.props.issues, currentColumn : "" };
+    this.state = {issues : this.props.issues, currentColumn : "", sortBy : "Time Submitted", statusFilter : "All"};
+    this.handleSort = this.handleSort.bcomind(this);
+    this.handleFilter = this.handleFilter.bind(this);
   }
 
+  handleSort = () => {};
 
-
-  issues = [
-    {
-      name: 'Bob',
-      description: 'Bathroom door in POST is broken',
-      owner: 'bobsaget@foo.com',
-      createdAt: 'Mon Dec 21 2018 04:29:00 HST',
-      status: 'Not started',
-    },
-    {
-      name: 'Megan',
-      description: 'Dorms are on fire',
-      owner: 'mgan@foo.com',
-      createdAt: 'Wed Oct 13 2018 07:01:00 HST',
-      status: 'In Progress',
-    },
-    {
-      name: 'Greg',
-      description: 'HOLMES elevator is broken',
-      owner: 'greg21@foo.com',
-      createdAt: 'Fri Nov 01 2018 09:43:00 HST',
-      status: 'Completed',
-    },
-  ];
+  handleFilter = () => {};
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
@@ -47,9 +29,28 @@ class IssueFeed extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
 
-    const issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
+    const sortBy = this.state.sortBy ? this.state.sortBy : "createdAt";
+    var issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
+    issues = sortBy(issues, sortBy);
+
+
     return (
         <Container>
+        <Menu>
+          <Menu.Item header>Sort By:</Menu.Item>
+          <Menu.Item name='Time Submitted' active={sortBy == 'Time Submitted'}> Time Submitted </Menu.Item>
+          <Menu.Item name='Likes' active={sortBy == 'Likes'}> Likes </Menu.Item>
+
+          <Menu.Item header position='right'>Filter By Status:</Menu.Item>
+          <Dropdown item text='All'>
+            <Dropdown.Menu>
+              <Dropdown.Item>Not Started</Dropdown.Item>
+              <Dropdown.Item>In Progress</Dropdown.Item>
+              <Dropdown.Item>Completed</Dropdown.Item>
+
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu>
           {issues.map((issue) => <IssueFeedEvent key={issue._id} issue={issue}/>)}
         </Container>
     );
