@@ -1,11 +1,11 @@
 import React from 'react';
-import { Container, Image, Menu, Header } from 'semantic-ui-react';
+import { Container, Menu, Header } from 'semantic-ui-react';
 
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 class Footer extends React.Component {
   render() {
     const divStyle = { backgroundColor: 'rgb(27, 28, 29)', color: 'black', paddingBottom: '10px' };
-    const footerMenuStyle = {   boxShadow: 'none', border: 'none', margin: '0', borderRadius: '0' };
+    const footerMenuStyle = { boxShadow: 'none', border: 'none', margin: '0', borderRadius: '0' };
     return (
         <div>
         <div className="black-background colorblocktop" id='footer' style={{ backgroundColor: 'rgb(27, 28, 29)' }}>
@@ -30,12 +30,13 @@ class Footer extends React.Component {
         </div>
           <div id='footer2'>
             <Container>
-              <Menu borderless id='topnav' style={{backgroundColor: '#006064', color: 'white'}}>
-                <Menu.Item style={{color: 'white'}}>Developed by Team Lucky Belly:</Menu.Item>
-                <Menu.Item style={{color: 'white'}}>Will Post</Menu.Item>
-                <Menu.Item style={{color: 'white'}}>Nicolas Lum</Menu.Item>
-                <Menu.Item style={{color: 'white'}}>Kenneth Lauritzen</Menu.Item>
-                <Menu.Item position='right' style={{color: 'white'}}>In collaboration with the Fall 2018 ICS 314 community</Menu.Item>
+              <Menu borderless id='topnav' style={{ backgroundColor: '#006064', color: 'white' }}>
+                <Menu.Item style={{ color: 'white' }}>Developed by Team Lucky Belly:</Menu.Item>
+                <Menu.Item style={{ color: 'white' }}>Will Post</Menu.Item>
+                <Menu.Item style={{ color: 'white' }}>Nicolas Lum</Menu.Item>
+                <Menu.Item style={{ color: 'white' }}>Kenneth Lauritzen</Menu.Item>
+                <Menu.Item position='right' style={{ color: 'white' }}>
+                    In collaboration with the Fall 2018 ICS 314 community</Menu.Item>
               </Menu>
             </Container>
           </div>
