@@ -21,7 +21,7 @@
   padding-left:50px;
   padding-right:50px;
   padding-top:30px;
-    position: fixed;
+    position: relative;
     width: 100%;
     bottom: 0;
 }
@@ -42,7 +42,7 @@
 #footer2 {
   background-color: #006064;
   color: white;
-    position: fixed;
+    position: relative;
     width: 100%;
     bottom: 0;
 }
