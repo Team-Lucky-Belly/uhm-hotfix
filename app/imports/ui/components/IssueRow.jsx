@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 
-
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class IssueRow extends React.Component {
 

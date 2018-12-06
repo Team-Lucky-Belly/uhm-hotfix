@@ -2,7 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Table, Container, Loader, Header } from 'semantic-ui-react';
 import IssueRow from '/imports/ui/components/IssueRow';
-import { Issues } from '/imports/api/issue/issue'
+import { Issues } from '/imports/api/issue/issue';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { sortBy } from 'underscore';
@@ -12,22 +12,22 @@ class ListIssueAdmin extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   constructor(props) {
     super(props);
-    this.state = {issues : this.props.issues, currentColumn : "" };
+    this.state = { issues: this.props.issues, currentColumn: '' };
     this.handleSort = this.handleSort.bind(this);
   }
 
   handleSort = sortKey => {
     const issues = (this.state.issues.length !== 0) ? this.state.issues : this.props.issues;
     const newIssues = sortBy(issues, sortKey);
-    let newColumn = "";
+    let newColumn = '';
 
-    if(this.state.currentColumn === sortKey) {
+    if (this.state.currentColumn === sortKey) {
       newIssues.reverse();
     } else {
       newColumn = sortKey;
     }
 
-    this.setState({issues: newIssues, currentColumn : newColumn});
+    this.setState({ issues: newIssues, currentColumn : newColumn}) ;
   };
 
   render() {
@@ -57,6 +57,7 @@ class ListIssueAdmin extends React.Component {
             {issues.map((issue) => <IssueRow key={issue._id} issue={issue}/>)}
           </Table.Body>
         </Table>
+            <Header as="h2" textAlign="center">List Issue</Header>
         </Container>
     );
   }
