@@ -84,7 +84,11 @@ class IssueFeedEvent extends React.Component {
             <Item.Content>
               <Item.Header as='h4' >{this.props.issue.name}</Item.Header>
 
+              <Item.Description>{this.props.issue.location}</Item.Description>
               <Item.Description>{this.props.issue.description}</Item.Description>
+
+              <Item.Meta>{this.props.issue.owner}</Item.Meta>
+
               <Item.Meta style={{ marginTop: '5px'}}>
                 <Label as='a' color={statusStyle} style={{float: 'left' }} size='tiny' className='status'>{this.props.issue.status}</Label>
                 <Label as='a' style={{float: 'left' }} size='tiny' className='status'><Icon name='comments'/>Comments</Label>

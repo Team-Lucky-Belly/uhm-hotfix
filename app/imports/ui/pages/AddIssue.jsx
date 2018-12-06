@@ -1,6 +1,6 @@
 import React from 'react';
 import { Issues, IssueSchema } from '/imports/api/issue/issue';
-import { Grid, Segment, Header } from 'semantic-ui-react';
+import { Grid, Segment, Header, Checkbox, Image } from 'semantic-ui-react';
 import AutoForm from 'uniforms-semantic/AutoForm';
 import LongTextField from 'uniforms-semantic/LongTextField';
 import TextField from 'uniforms-semantic/TextField';
@@ -19,6 +19,10 @@ class AddIssue extends React.Component {
     this.submit = this.submit.bind(this);
     this.insertCallback = this.insertCallback.bind(this);
     this.formRef = null;
+    this.state = {
+      showMap: false,
+    }
+
   }
 
   /** Notify the user of the results of the submit. If successful, clear the form. */
@@ -41,8 +45,14 @@ class AddIssue extends React.Component {
     Issues.insert({ name, description, owner, createdAt, location, status, votes }, this.insertCallback);
   }
 
+
+
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   render() {
+
+    let mapStyle;
+    this.state.showMap ? mapStyle = {display: 'block'} : mapStyle = {display: 'none'};
+
     return (
         <div>
           <Grid container centered>
@@ -54,8 +64,10 @@ class AddIssue extends React.Component {
                 <Segment>
                   <TextField name='name'/>
                   <LongTextField name='description'/>
+                  <Checkbox position='floatRight' toggle label='Use map pin to define location' onChange={() => this.setState({ showMap: !this.state.showMap})} />
+                  <Image centered src='https://d32ogoqmya1dw8.cloudfront.net/images/sp/library/google_earth/google_maps_hello_world.jpg' style={mapStyle} />
                   <TextField name='location'/>
-                  <SubmitField value='Submit'/>
+                  <SubmitField style={{align: 'right' }} value='Submit'/>
                   <ErrorsField/>
                   <HiddenField name='owner' value='fakeuser@foo.com'/>
                   <HiddenField name='createdAt' value={new Date()}/>
